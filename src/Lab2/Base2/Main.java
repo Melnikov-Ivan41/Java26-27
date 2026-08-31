@@ -88,19 +88,17 @@ public class Main {
             try {
                 LocalDate date = LocalDate.parse(input, formatter);
 
-                // Перевірка, щоб дата не була в майбутньому
                 if (date.isAfter(LocalDate.now())) {
                     System.out.println("Помилка: Дата народження не може бути в майбутньому.");
-                    continue; // Повертаємось на початок циклу
+                    continue;
                 }
 
-                // Можна також додати перевірку на адекватний вік (наприклад, не старше 100 років)
                 if (date.isBefore(LocalDate.now().minusYears(120))) {
                     System.out.println("Помилка: Введена дата занадто стара.");
                     continue;
                 }
 
-                return date; // Якщо всі перевірки пройдені, повертаємо дату
+                return date;
             } catch (DateTimeParseException e) {
                 System.out.println("Помилка: Введіть дату в точному форматі дд.мм.рррр (наприклад, 05.09.2003).");
             }

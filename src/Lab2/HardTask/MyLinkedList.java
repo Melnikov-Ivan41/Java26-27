@@ -2,11 +2,10 @@ package Lab2.HardTask;
 
 public class MyLinkedList implements MyList {
 
-    // 1. Внутрішній клас, який описує один "вагончик" (Вузол)
     private static class Node {
-        Object item; // Самі дані, які ми зберігаємо
-        Node next;   // Вказівник на наступний вагончик
-        Node prev;   // Вказівник на попередній вагончик
+        Object item;
+        Node next;
+        Node prev;
 
         Node(Node prev, Object element, Node next) {
             this.item = element;
@@ -15,35 +14,31 @@ public class MyLinkedList implements MyList {
         }
     }
 
-    private int size = 0; // Кількість елементів
-    private Node first;   // Вказівник на самий перший вагон (голова)
-    private Node last;    // Вказівник на самий останній вагон (хвіст)
+    private int size = 0;
+    private Node first;
+    private Node last;
 
     public MyLinkedList() {
-        // Конструктор порожній, бо при створенні немає ніяких вагончиків
     }
 
-    // Допоміжний метод: перевірка на адекватність індексу
     private void checkIndex(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Індекс: " + index + ", Розмір: " + size);
         }
     }
 
-    // Допоміжний метод: пошук КОНКРЕТНОГО ВАГОНЧИКА за індексом
     private Node node(int index) {
-        // Розумний пошук: якщо індекс у першій половині, йдемо з початку
+
         if (index < (size / 2)) {
             Node x = first;
             for (int i = 0; i < index; i++) {
-                x = x.next; // Переходимо до наступного
+                x = x.next;
             }
             return x;
         } else {
-            // Якщо у другій половині - йдемо з кінця (хвоста) назад
             Node x = last;
             for (int i = size - 1; i > index; i--) {
-                x = x.prev; // Переходимо до попереднього
+                x = x.prev;
             }
             return x;
         }
@@ -51,17 +46,13 @@ public class MyLinkedList implements MyList {
 
     @Override
     public void add(Object e) {
-        // Додавання в кінець списку
-        final Node l = last; // Запам'ятовуємо поточний останній вагон
-        // Створюємо новий вагон: попередній - це старий останній, наступного немає (null)
+        final Node l = last;
         final Node newNode = new Node(l, e, null);
-        last = newNode; // Тепер наш новий вагон стає офіційним останнім
+        last = newNode;
 
         if (l == null) {
-            // Якщо список був порожнім, то новий вагон одночасно і перший
             first = newNode;
         } else {
-            // Якщо вагони були, кажемо старому останньому, що за ним тепер стоїть новий
             l.next = newNode;
         }
         size++;
@@ -73,18 +64,16 @@ public class MyLinkedList implements MyList {
             throw new IndexOutOfBoundsException("Індекс: " + index + ", Розмір: " + size);
         }
         if (index == size) {
-            add(element); // Якщо індекс дорівнює розміру, просто кидаємо в кінець
+            add(element);
         } else {
-            // Вставка перед існуючим вузлом
-            Node target = node(index); // Знаходимо вагон, який зараз на цьому місці
-            Node pred = target.prev;   // Знаходимо того, хто стоїть перед ним
+            Node target = node(index);
+            Node pred = target.prev;
 
-            // Створюємо новий вагон, вклинюючи його між pred і target
             Node newNode = new Node(pred, element, target);
             target.prev = newNode;
 
             if (pred == null) {
-                first = newNode; // Якщо вставляємо в самий початок
+                first = newNode;
             } else {
                 pred.next = newNode;
             }
@@ -95,27 +84,24 @@ public class MyLinkedList implements MyList {
     @Override
     public Object get(int index) {
         checkIndex(index);
-        return node(index).item; // Знаходимо вагон і дістаємо з нього вантаж (item)
+        return node(index).item;
     }
 
     @Override
     public Object remove(int index) {
         checkIndex(index);
-        Node x = node(index); // Знаходимо вагон, який треба знищити
-        Object element = x.item; // Зберігаємо вантаж, щоб повернути його
+        Node x = node(index);
+        Object element = x.item;
 
         Node next = x.next;
         Node prev = x.prev;
 
-        // "Відчіпляємо" вагон від попереднього
         if (prev == null) {
             first = next;
         } else {
             prev.next = next;
             x.prev = null;
         }
-
-        // "Відчіпляємо" вагон від наступного
         if (next == null) {
             last = prev;
         } else {
@@ -123,7 +109,7 @@ public class MyLinkedList implements MyList {
             x.next = null;
         }
 
-        x.item = null; // Очищуємо дані для збирача сміття
+        x.item = null;
         size--;
         return element;
     }
@@ -132,7 +118,7 @@ public class MyLinkedList implements MyList {
     public void set(int index, Object element) {
         checkIndex(index);
         Node x = node(index);
-        x.item = element; // Просто замінюємо вантаж у знайденому вагоні
+        x.item = element;
     }
 
     @Override
@@ -161,7 +147,6 @@ public class MyLinkedList implements MyList {
     public Object[] toArray() {
         Object[] result = new Object[size];
         int i = 0;
-        // Проходимо по всіх вагонах від першого до останнього
         for (Node x = first; x != null; x = x.next) {
             result[i++] = x.item;
         }
@@ -179,7 +164,6 @@ public class MyLinkedList implements MyList {
     @Override
     public void addAll(int index, Object[] c) {
         if (c == null || c.length == 0) return;
-        // Для спрощення: масив додаємо по одному елементу, зсуваючи індекс
         int currIndex = index;
         for (Object o : c) {
             add(currIndex++, o);

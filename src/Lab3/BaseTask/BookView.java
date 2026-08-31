@@ -4,7 +4,6 @@ import java.util.List;
 
 public class BookView {
 
-    // Виведення головного меню
     public void printMenu() {
         System.out.println("\n========== МЕНЮ КАТАЛОГУ КНИГ ==========");
         System.out.println("1. Знайти книги за автором");
@@ -16,10 +15,8 @@ public class BookView {
         System.out.print("Оберіть пункт: ");
     }
 
-    // Універсальний метод для виведення списку знайдених книг
     public void printBooks(List<Book> books, String title) {
         System.out.println("\n--- " + title + " ---");
-        // Обробка вимоги: якщо даних не знайдено, вивести повідомлення
         if (books == null || books.isEmpty()) {
             System.out.println("За вашим запитом нічого не знайдено.");
             return;
@@ -30,7 +27,6 @@ public class BookView {
         }
     }
 
-    // Перевантажений метод для виведення масиву (знадобиться для вихідного масиву)
     public void printBooks(Book[] books, String title) {
         System.out.println("\n--- " + title + " ---");
         if (books == null || books.length == 0) {
@@ -43,7 +39,6 @@ public class BookView {
         }
     }
 
-    // Виведення службових повідомлень
     public void printMessage(String message) {
         System.out.println(message);
     }

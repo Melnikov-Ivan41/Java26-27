@@ -8,11 +8,9 @@ public class CustomClassLoader extends ClassLoader {
 
     @Override
     public Class<?> loadClass(String name) throws ClassNotFoundException {
-        // Якщо це наш клас, ми НЕ звертаємося до батьківського завантажувача (super.loadClass)
         if (name.equals("Lab1.Hardtask.TestModule")) {
             return findClass(name);
         }
-        // Для всіх інших (наприклад, java.lang.String, Object) залишаємо стандартну поведінку
         return super.loadClass(name);
     }
 

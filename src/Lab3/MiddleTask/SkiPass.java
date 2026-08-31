@@ -3,7 +3,6 @@ package Lab3.MiddleTask;
 import java.time.LocalDateTime;
 
 public class SkiPass {
-    // Статическая переменная для генерации уникальных ID
     private static int idCounter = 1;
 
     private final int id;
@@ -11,11 +10,10 @@ public class SkiPass {
     private final PassLimit passLimit;
     private final PassDuration passDuration;
 
-    private int ridesLeft;       // Оставшееся количество поездок
-    private boolean isBlocked;   // Статус блокировки
-    private final LocalDateTime issueDate; // Дата и время выпуска карты
+    private int ridesLeft;
+    private boolean isBlocked;
+    private final LocalDateTime issueDate;
 
-    // Конструктор №1: Для карт с лимитом по количеству подъемов (10, 20, 50, 100)[cite: 1]
     public SkiPass(PassType passType, int totalRides) {
         this.id = idCounter++;
         this.passType = passType;
@@ -23,35 +21,28 @@ public class SkiPass {
         this.passDuration = PassDuration.NOT_APPLICABLE;
         this.ridesLeft = totalRides;
         this.isBlocked = false;
-        this.issueDate = LocalDateTime.now(); // Фиксируем время выдачи
+        this.issueDate = LocalDateTime.now();
     }
 
-    // Конструктор №2: Для безлимитных карт по времени (полдня, день, сезон)[cite: 1]
     public SkiPass(PassType passType, PassDuration passDuration) {
         this.id = idCounter++;
         this.passType = passType;
         this.passLimit = PassLimit.UNLIMITED_RIDES;
         this.passDuration = passDuration;
-        this.ridesLeft = -1; // -1 будет означать "безлимит"
+        this.ridesLeft = -1;
         this.isBlocked = false;
         this.issueDate = LocalDateTime.now();
     }
 
-    // --- Бизнес-методы карты ---
-
-    // Метод блокировки карты (за нарушение правил)[cite: 1]
     public void blockPass() {
         this.isBlocked = true;
     }
 
-    // Списание одной поездки (вызывается турникетом)[cite: 1]
     public void deductRide() {
         if (passLimit == PassLimit.BY_RIDES && ridesLeft > 0) {
             ridesLeft--;
         }
     }
-
-    // --- Геттеры для Турникета ---
 
     public int getId() { return id; }
     public PassType getPassType() { return passType; }

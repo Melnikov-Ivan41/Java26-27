@@ -6,11 +6,9 @@ import java.util.Comparator;
 import java.util.List;
 
 public class BookModel {
-    // Наш масив даних (як вимагає завдання)
     private Book[] books;
 
     public BookModel() {
-        // 1. Ініціалізація заздалегідь підготовлених даних (не менше 10 елементів)
         books = new Book[] {
                 new Book("Кобзар", "Тарас Шевченко", "Основа", 2020, 720, 450.0),
                 new Book("Тіні забутих предків", "Михайло Коцюбинський", "Фоліо", 2018, 320, 250.0),
@@ -25,16 +23,13 @@ public class BookModel {
         };
     }
 
-    // Метод для отримання всього масиву (знадобиться для виведення на старті)
     public Book[] getAllBooks() {
         return books;
     }
 
-    // 2. Отримати список книг зазначеного автора
     public List<Book> getBooksByAuthor(String author) {
         List<Book> result = new ArrayList<>();
         for (Book book : books) {
-            // Використовуємо contains та toLowerCase для більш гнучкого пошуку
             if (book.getAuthor().toLowerCase().contains(author.toLowerCase())) {
                 result.add(book);
             }
@@ -42,7 +37,6 @@ public class BookModel {
         return result;
     }
 
-    // 3. Отримати список книг зазначеного видавництва
     public List<Book> getBooksByPublisher(String publisher) {
         List<Book> result = new ArrayList<>();
         for (Book book : books) {
@@ -53,7 +47,6 @@ public class BookModel {
         return result;
     }
 
-    // 4. Отримати список книг, виданих пізніше вказаного року
     public List<Book> getBooksPublishedAfter(int year) {
         List<Book> result = new ArrayList<>();
         for (Book book : books) {
@@ -64,12 +57,10 @@ public class BookModel {
         return result;
     }
 
-    // 5. Відсортувати книги за видавництвами, використовуючи Comparator
     public void sortBooksByPublisher() {
         Arrays.sort(books, new Comparator<Book>() {
             @Override
             public int compare(Book b1, Book b2) {
-                // Порівнюємо рядки (назви видавництв) за алфавітом
                 return b1.getPublisher().compareToIgnoreCase(b2.getPublisher());
             }
         });

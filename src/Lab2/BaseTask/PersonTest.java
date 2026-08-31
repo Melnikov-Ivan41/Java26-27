@@ -8,7 +8,7 @@ public class PersonTest {
     @Test
     public void checkEqualsContract() {
         EqualsVerifier.forClass(Person.class)
-                .usingGetClass() // <--- Добавляем эту строчку
+                .usingGetClass()
                 .verify();
     }
 }

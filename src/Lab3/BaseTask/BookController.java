@@ -14,7 +14,6 @@ public class BookController {
         this.scanner = new Scanner(System.in);
     }
 
-    // Головний цикл обробки команд
     public void run() {
         while (true) {
             view.printMenu();

@@ -8,7 +8,6 @@ public class Book {
     private int pages;
     private double price;
 
-    // Конструктор для швидкого створення книги
     public Book(String title, String author, String publisher, int year, int pages, double price) {
         this.title = title;
         this.author = author;
@@ -18,7 +17,6 @@ public class Book {
         this.price = price;
     }
 
-    // Геттери, які знадобляться нам для пошуку та сортування
     public String getAuthor() {
         return author;
     }
@@ -43,7 +41,6 @@ public class Book {
         return price;
     }
 
-    // Перевизначаємо toString() для красивого виведення на екран
     @Override
     public String toString() {
         return String.format("Книга: «%s» | Автор: %s | Видавництво: %s | Рік: %d | Стор: %d | Ціна: %.2f грн",

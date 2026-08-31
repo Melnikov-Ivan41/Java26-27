@@ -2,20 +2,18 @@ package Lab2.HardTask;
 
 import java.util.RandomAccess;
 
-// Клас імплементує наш інтерфейс MyList та маркерний інтерфейс RandomAccess
 public class MyArrayList implements MyList, RandomAccess {
 
-    private Object[] elements; // Внутрішній масив для зберігання даних
-    private int size;          // Фактична кількість доданих елементів
+    private Object[] elements;
+    private int size;
 
-    private static final int DEFAULT_CAPACITY = 10; // Початковий розмір масиву
+    private static final int DEFAULT_CAPACITY = 10;
 
     public MyArrayList() {
         this.elements = new Object[DEFAULT_CAPACITY];
         this.size = 0;
     }
 
-    // Допоміжний метод: якщо масив заповнений, збільшуємо його вдвічі
     private void ensureCapacity(int minCapacity) {
         if (minCapacity > elements.length) {
             int newCapacity = elements.length * 2;
@@ -26,7 +24,6 @@ public class MyArrayList implements MyList, RandomAccess {
         }
     }
 
-    // Перевірка, чи не виходить індекс за межі списку
     private void checkIndex(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Індекс: " + index + ", Розмір: " + size);
@@ -36,7 +33,7 @@ public class MyArrayList implements MyList, RandomAccess {
     @Override
     public void add(Object e) {
         ensureCapacity(size + 1);
-        elements[size++] = e; // Додаємо в кінець і збільшуємо size
+        elements[size++] = e;
     }
 
     @Override
@@ -45,7 +42,6 @@ public class MyArrayList implements MyList, RandomAccess {
             throw new IndexOutOfBoundsException("Індекс: " + index + ", Розмір: " + size);
         }
         ensureCapacity(size + 1);
-        // Зсуваємо елементи вправо, щоб звільнити місце
         System.arraycopy(elements, index, elements, index + 1, size - index);
         elements[index] = element;
         size++;
@@ -67,9 +63,7 @@ public class MyArrayList implements MyList, RandomAccess {
         if (c == null || c.length == 0) return;
 
         ensureCapacity(size + c.length);
-        // Спочатку зсуваємо існуючі елементи вправо
         System.arraycopy(elements, index, elements, index + c.length, size - index);
-        // Вставляємо новий масив у звільнене місце
         System.arraycopy(c, 0, elements, index, c.length);
         size += c.length;
     }
@@ -84,12 +78,11 @@ public class MyArrayList implements MyList, RandomAccess {
     public Object remove(int index) {
         checkIndex(index);
         Object removedElement = elements[index];
-        // Зсуваємо елементи вліво, затираючи видалений
         int numMoved = size - index - 1;
         if (numMoved > 0) {
             System.arraycopy(elements, index + 1, elements, index, numMoved);
         }
-        elements[--size] = null; // Очищуємо останній елемент для Garbage Collector
+        elements[--size] = null;
         return removedElement;
     }
 
@@ -110,7 +103,7 @@ public class MyArrayList implements MyList, RandomAccess {
                 if (o.equals(elements[i])) return i;
             }
         }
-        return -1; // Якщо елемент не знайдено
+        return -1;
     }
 
     @Override
