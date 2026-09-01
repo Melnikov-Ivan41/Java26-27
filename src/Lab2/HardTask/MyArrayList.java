@@ -18,7 +18,6 @@ public class MyArrayList implements MyList, RandomAccess {
         if (minCapacity > elements.length) {
             int newCapacity = elements.length * 2;
             Object[] newElements = new Object[newCapacity];
-            // Швидке системне копіювання старого масиву в новий
             System.arraycopy(elements, 0, newElements, 0, size);
             elements = newElements;
         }

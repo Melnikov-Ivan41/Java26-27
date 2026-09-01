@@ -64,13 +64,16 @@ public class MyCache {
     }
 
     public Object get(Object key) {
-        int hash = (key == null) ? 0 : key.hashCode();
+        if (key == null) {
+            throw new NullPointerException("Ключ не може бути null");
+        }
+        int hash = key.hashCode();
         int index = Math.abs(hash) % table.length;
 
         Node current = table[index];
 
         while (current != null) {
-            if (current.hash == hash && (key == current.key || (key != null && key.equals(current.key)))) {
+            if (current.hash == hash && (key == current.key || key.equals(current.key))) {
 
                 if (System.currentTimeMillis() > current.expiryTime) {
                     remove(key);
@@ -88,14 +91,17 @@ public class MyCache {
     }
 
     public void put(Object key, Object value, long ttl) {
-        int hash = (key == null) ? 0 : key.hashCode();
+        if (key == null || value == null) {
+            throw new NullPointerException("Ключ і значення не можуть бути null");
+        }
+        int hash = key.hashCode();
         int index = Math.abs(hash) % table.length;
 
         long expiryTime = System.currentTimeMillis() + ttl;
 
         Node current = table[index];
         while (current != null) {
-            if (current.hash == hash && (key == current.key || (key != null && key.equals(current.key)))) {
+            if (current.hash == hash && (key == current.key || key.equals(current.key))) {
                 current.value = value;
                 current.expiryTime = expiryTime;
 
@@ -133,14 +139,17 @@ public class MyCache {
     }
 
     public boolean remove(Object key) {
-        int hash = (key == null) ? 0 : key.hashCode();
+        if (key == null) {
+            throw new NullPointerException("Ключ не може бути null");
+        }
+        int hash = key.hashCode();
         int index = Math.abs(hash) % table.length;
 
         Node current = table[index];
         Node prevInBucket = null;
 
         while (current != null) {
-            if (current.hash == hash && (key == current.key || (key != null && key.equals(current.key)))) {
+            if (current.hash == hash && (key == current.key || key.equals(current.key))) {
                 if (prevInBucket == null) {
                     table[index] = current.nextInBucket;
                 } else {
